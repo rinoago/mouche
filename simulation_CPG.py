@@ -39,7 +39,6 @@ class Simulation_CPG:
         self.single_steps_data = self.load_single_steps_data()
         self.preprogrammed_steps_length = len(self.single_steps_data["joint_LFCoxa"])
         self.preprogrammed_steps_timestep = self.single_steps_data["meta"]["timestep"]
-        self.fly_pos_hist=[]
         # Assert data consistency
         for k, v in self.single_steps_data.items():
             if k.startswith("joint_"):
@@ -117,8 +116,6 @@ class Simulation_CPG:
             "joints": np.array([joints_angles[dof] for dof in fly_joints]),
             "adhesion": adhesion_onoff.astype(int),
         }
-
-        self.record_pos()
 
         return action
     
