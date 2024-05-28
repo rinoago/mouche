@@ -25,9 +25,17 @@ To study the neuromechanical aspects of Drosophila behavior, we use NeuroMechFly
 To begin with the course materials, ensure you have Git, conda, and the FlyGym Python package installed.
 
 ### **Install Dependencies**:
+To be able to run this project, the new version of flygym is necessary: switch to the dev-v1.0.0 branch of the flygym repository.
 ```sh
-pip install "flygym"
+git clone https://github.com/NeLy-EPFL/flygym.git flygym-v1
+cd flygym-v1
+git checkout dev-v1.0.0
+conda create -y -n flygym-v1 python=3.11
+conda activate flygym-v1
+pip install -e ".[dev]"
 ```
+
+
 
 ### **Clone the Repository to your local machine**: 
 ```sh
@@ -35,6 +43,8 @@ git clone https://github.com/rinoago/mouche.git
 ```
 
 ### **Run Simulations**: 
+Choose the flygym-v1 kernel.
+
 Run the simulation using the `main.ipynb` file.
 ### **Analyze Results**: 
 Use the provided analysis scripts to interpret the simulation data and visualize the fly’s behaviors.
@@ -43,12 +53,14 @@ Use the provided analysis scripts to interpret the simulation data and visualize
 
 Please read our `finalreport` file for more insights on our researchs, and a list of all the references used for this project. 
 
+We would like to thank Professor Pavan Ramdya, Victor Alfred Stimpfling and Thomas Ka Chung Lam for their precious help in the realisation of this project.
+
 [NeuroMechFly, a neuromechanical model of adult Drosophila melanogaster](https://www.nature.com/articles/s41592-022-01466-7)
 
 [NeuroMechFly 2.0, a framework for simulating embodied sensorimotor control in adult Drosophila](https://www.biorxiv.org/content/10.1101/2023.09.18.556649v1)
 
 ## Contact
 
-For any questions or issues, please open an issue on GitHub or contact us directly at [laetitia.wihlhelm@epfl.ch], [hugo.masson@epfl.ch] or [theophine.gurlie@epfl.ch].
+For any questions or issues, please open an issue on GitHub or contact us directly at [laetitia.wilhelm@epfl.ch], [hugo.masson@epfl.ch] or [theophine.gurlie@epfl.ch].
 
 Thank you for your interest in our project! We hope this repository provides valuable insights into the fascinating world of Drosophila neuromechanics. 

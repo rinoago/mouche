@@ -15,14 +15,31 @@ class MovingFly(Fly): #definition of our fly class
         self.joint_record=[] #init des end effector
         self.fly_pos_hist=[] #history of position
 
-        self.fly_joints_angles_30=[] #history of joints angles
-        self.fly_joints_angles_28=[]
-        self.fly_joints_angles_9=[]
-        self.fly_joints_angles_7=[]
-        self.fly_joints_angles_8=[]
-        self.fly_joints_angles_31=[]
-        self.mid_leg_end_effector_L=[]
+
+        self.mid_leg_end_effector_L=[]#history of end-effectors
         self.mid_leg_end_effector_R=[]
+
+
+        self.fly_joints_angles_30_=[]  #history of joints angles
+        self.fly_joints_angles_28_=[]
+        self.fly_joints_angles_9_=[]
+        self.fly_joints_angles_7_=[]
+        self.fly_joints_angles_8_=[]
+        self.fly_joints_angles_31_=[]
+
+        self.leg1_joints=[]
+        self.leg2_joints=[]
+        self.leg3_joints=[]
+        self.leg4_joints=[]
+        self.leg5_joints=[]
+        self.leg6_joints=[]
+
+        self.leg1_joint_ids = [i for i in range(0, 6)]
+        self.leg2_joint_ids = [i for i in range(7, 13)]
+        self.leg3_joint_ids = [i for i in range(14, 20)]
+        self.leg4_joint_ids = [i for i in range(21, 27)]
+        self.leg5_joint_ids = [i for i in range(28, 34)]
+        self.leg6_joint_ids = [i for i in range(35, 41)]
 
         self.obj_threshold = obj_threshold
         self.decision_interval = decision_interval
@@ -68,9 +85,9 @@ class MovingFly(Fly): #definition of our fly class
     def simulate_step(self, sim: Simulation, roll_angle: float, yaw_angle: float, side: str='L'):
         action = {"joints": self.simulate_movement(sim, roll_angle, yaw_angle, side)}
         if side =='L':
-            action["adhesion"] = np.array([1,0,1,1,1,1]) #add adhesion 
+            action["adhesion"] = np.array([1,0,1,1,1,1]) #remove adhesion 
         else:
-            action["adhesion"] = np.array([1,1,1,1,0,1]) #add adhesion 
+            action["adhesion"] = np.array([1,1,1,1,0,1]) #remove adhesion 
         return action
 
     def simulate_movement(self, sim: Simulation, roll_angle: float, yaw_angle: float, side: str, increment: float = 0.00015,):
@@ -96,20 +113,22 @@ class MovingFly(Fly): #definition of our fly class
         self.fly_pos_hist.append(observation["fly"])
         self.joint_record.append(joint_pos)
 
-    def record_joints(self):
-        #record joints angles
-        joint_pos = self.standing.copy()
-        self.fly_joints_angles_30.append(joint_pos[30])
-        self.fly_joints_angles_28.append(joint_pos[28])
-        self.fly_joints_angles_9.append(joint_pos[9])
-        self.fly_joints_angles_7.append(joint_pos[7])
-        self.fly_joints_angles_8.append(joint_pos[8])
-        self.fly_joints_angles_31.append(joint_pos[31])
-
     def record_general(self, sim: Simulation):
         observation = self.get_observation(sim)
         end_effector = observation["end_effectors"]
         self.mid_leg_end_effector_L.append([end_effector[1,:]])
         self.mid_leg_end_effector_R.append([end_effector[4,:]])
-        #self.fly_pos_hist.append(observation["fly"])
-        self.record_joints()
+        # Append joint angles to the respective lists
+        self.fly_joints_angles_30_.append(observation["joints"][0][30])
+        self.fly_joints_angles_28_.append(observation["joints"][0][28])
+        self.fly_joints_angles_9_.append(observation["joints"][0][9])
+        self.fly_joints_angles_7_.append(observation["joints"][0][7])
+        self.fly_joints_angles_8_.append(observation["joints"][0][8])
+        self.fly_joints_angles_31_.append(observation["joints"][0][31])
+        #record
+        self.leg1_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg1_joint_ids])
+        self.leg2_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg2_joint_ids])
+        self.leg3_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg3_joint_ids])
+        self.leg4_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg4_joint_ids])
+        self.leg5_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg5_joint_ids])
+        self.leg6_joints.append([observation["joints"][0][joint_id] for joint_id in self.leg6_joint_ids])
