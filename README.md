@@ -45,7 +45,7 @@ git clone https://github.com/rinoago/mouche.git
 ### **Run Simulations**: 
 Choose the flygym-v1 kernel.
 
-Run the simulation using the `main.ipynb` file.
+Run the simulation using the `main.ipynb` file. It can take some time.
 ### **Analyze Results**: 
 Use the provided analysis scripts to interpret the simulation data and visualize the fly’s behaviors.
 
